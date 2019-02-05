@@ -595,15 +595,19 @@ view: order {
     sql: ${TABLE}.Magento_Grand_Total__c ;;
   }
 
+  dimension: is_over_1000 {
+    type: yesno
+    sql: ${magento_grand_total__c} > 1000 ;;
+  }
+
   measure: total_sales {
     type: sum
     value_format_name: eur_0
-    sql: ${magento_grand_total__c} ;;
-    filters: {
-      field: status
-      value: "Paid"
+    sql: ${magento_grand_total__c}  ;;
+    filters: { field: status  value: "Paid"
     }
-    drill_fields: []
+    filters: { field: is_over_1000 value: "Yes" }
+    drill_fields: [number_of_sales]
   }
 
 

@@ -19,6 +19,7 @@ include: "*.view.lkml"                       # include all views in this project
 # }
 
 explore: order {
+  label: "Sales"
   join: order_line__c {
     relationship: one_to_one
     type: inner

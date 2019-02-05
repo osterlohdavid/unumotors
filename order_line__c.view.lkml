@@ -247,8 +247,8 @@ view: order_line__c {
 
   dimension: product_type {
     type: string
-    sql: CASE WHEN ${skufor_rollup__c} = "%unu%" THEN "Scooter"
-              WHEN ${skufor_rollup__c} = "%battery%" THEN "Battery" END ;;
+    sql: CASE WHEN ${skufor_rollup__c} LIKE "%UNU%" THEN "Scooter"
+              WHEN ${skufor_rollup__c} LIKE "%BATTERY%" THEN "Battery" END ;;
   }
 
   dimension: status__c {
