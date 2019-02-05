@@ -17,3 +17,11 @@ include: "*.view.lkml"                       # include all views in this project
 #     sql_on: ${users.id} = ${orders.user_id} ;;
 #   }
 # }
+
+explore: order {
+  join: order_line__c {
+    relationship: one_to_one
+    type: inner
+    sql_on: ${order.id} = ${order_line__c.order__c} ;;
+  }
+}
