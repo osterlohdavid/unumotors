@@ -133,6 +133,17 @@ view: order {
     sql: ${TABLE}.BillingCompanyName__c ;;
   }
 
+  #B2B/B2C
+  dimension: sales_channel {
+    type: string
+    sql: ${TABLE}.BillingCompanyName__c
+    CASE
+      WHEN ${billing_address_name__c} IS NUll OR ${billing_company_name__c}=%Santander% OR ${billing_company_name__c}=%santander%
+      THEN 'B2C'
+      ELSE 'B2B'
+        ;;
+  }
+
   dimension: billing_country {
     type: string
     sql: ${TABLE}.BillingCountry ;;
@@ -1053,4 +1064,32 @@ view: order {
     type: count
     drill_fields: [magento_order_id__c, name]
   }
+
+  #Paid Orders
+  dimension: is_paid_order {
+    description: "This is a Paid Order"
+    sql: CASE WHEN ${magento_grand_total__c} >=1000 AND ${status}="Paid" AND ${order_line__c.product_type} = "Scooter"
+              THEN "1"
+              ELSE "0"
+              END ;;
+  }
+
+  measure: number_of_paid_orders {
+    type: count
+    filters: {field: is_paid_order value: "1"}
+  }
+
+  #Sals Channels
+  # measure:  b2b {
+  #   label: "B2B"
+
+ # }
+
+
+  # measure: number_of_paid_orders {
+  #   type: count
+  #   filters: {field: is_over_1000 value: "Yes"}
+  #   filters: {field: status value: "Paid"}
+  #   filters: {field: order_line__c.product_type value: "Scooter"}
+  # }
 }

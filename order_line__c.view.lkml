@@ -248,7 +248,13 @@ view: order_line__c {
   dimension: product_type {
     type: string
     sql: CASE WHEN ${skufor_rollup__c} LIKE "%UNU%" THEN "Scooter"
-              WHEN ${skufor_rollup__c} LIKE "%BATTERY%" THEN "Battery" END ;;
+              WHEN ${skufor_rollup__c} LIKE "%unu%" THEN "Scooter"
+              WHEN ${skufor_rollup__c} LIKE "%BATTERY%" THEN "BATTERY"
+              WHEN ${skufor_rollup__c} LIKE "%HELM%" THEN "HELMET"
+              WHEN ${skufor_rollup__c} LIKE "%LOCK%" THEN "LOCK"
+              WHEN ${skufor_rollup__c} LIKE "%SP%" THEN "SPARE PART"
+              WHEN ${skufor_rollup__c} LIKE "%INSURANCE%" THEN "INSURANCE"
+              END ;;
   }
 
   dimension: status__c {

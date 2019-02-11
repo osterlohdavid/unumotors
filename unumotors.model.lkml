@@ -25,4 +25,20 @@ explore: order {
     type: inner
     sql_on: ${order.id} = ${order_line__c.order__c} ;;
   }
+  join: account {
+    relationship: one_to_one
+    type: inner
+    sql_on: ${order.account_id} = ${account.id} ;;
+  }
+
+  join: opportunity {
+    relationship: many_to_one
+    type: left_outer
+    sql_on: ${order.opportunity_id} = ${opportunity.id} ;;
+  }
+
+}
+
+explore: account_performance {
+  label: "Google Ads"
 }
