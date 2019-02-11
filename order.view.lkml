@@ -136,11 +136,12 @@ view: order {
   #B2B/B2C
   dimension: sales_channel {
     type: string
-    sql: ${TABLE}.BillingCompanyName__c
-    CASE
-      WHEN ${billing_address_name__c} IS NUll OR ${billing_company_name__c}=%Santander% OR ${billing_company_name__c}=%santander%
-      THEN 'B2C'
-      ELSE 'B2B'
+    sql: CASE WHEN ${is_paid_order} = "1" AND ${billing_address_name__c} IS NUll OR ${billing_company_name__c} IN (lower("%santander consumer leasing gmbh%"), "Herr", "herr", "Frau", "frau", "c/o")
+      THEN "B2C"
+              WHEN ${is_paid_order} = "1" AND ${billing_address_name__c} IS NOT NUll OR ${billing_company_name__c} NOT IN (lower("%santander consumer leasing gmbh%"), "Herr", "herr", "Frau", "frau", "c/o")
+      THEN "B2B"
+      ELSE NULL
+      END
         ;;
   }
 
