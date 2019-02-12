@@ -37,6 +37,18 @@ explore: order {
     sql_on: ${order.opportunity_id} = ${opportunity.id} ;;
   }
 
+  join: user {
+    relationship:many_to_one
+    type: left_outer
+    sql_on:${opportunity.owner_id} = ${user.id} ;;
+  }
+
+  join: profile {
+    relationship: many_to_one
+    type: left_outer
+    sql_on:  ${profile.id} = ${user.profile_id}   ;;
+  }
+
 }
 
 explore: account_performance {

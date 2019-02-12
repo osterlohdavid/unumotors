@@ -2,11 +2,13 @@ view: order {
   sql_table_name: Salesforce.`Order` ;;
 
   dimension: magento_order_id__c {
+    hidden: yes
     type: string
     sql: ${TABLE}.Magento_Order_Id__c ;;
   }
 
   dimension_group: _metadata__timestamp {
+    hidden: yes
     type: time
     timeframes: [
       raw,
@@ -21,21 +23,25 @@ view: order {
   }
 
   dimension: _metadata__uuid {
+    hidden: yes
     type: string
     sql: ${TABLE}._metadata__uuid ;;
   }
 
   dimension: _metadata_deleted {
+    hidden: yes
     type: yesno
     sql: ${TABLE}._metadata_deleted ;;
   }
 
   dimension: _metadata_salesforce_id {
+    hidden: yes
     type: string
     sql: ${TABLE}._metadata_salesforce_id ;;
   }
 
   dimension_group: _metadata_updated {
+    hidden: yes
     type: time
     timeframes: [
       raw,
@@ -50,21 +56,25 @@ view: order {
   }
 
   dimension: account_id {
+    hidden: yes
     type: string
     sql: ${TABLE}.AccountId ;;
   }
 
   dimension: account_name__c {
+    hidden: yes
     type: string
     sql: ${TABLE}.AccountName__c ;;
   }
 
   dimension: activated_by_id {
+    hidden: yes
     type: string
     sql: ${TABLE}.ActivatedById ;;
   }
 
   dimension_group: activated {
+    hidden: yes
     type: time
     timeframes: [
       raw,
@@ -79,6 +89,7 @@ view: order {
   }
 
   dimension_group: actual_delivery_date__c {
+    hidden: yes
     type: time
     timeframes: [
       raw,
@@ -94,36 +105,43 @@ view: order {
   }
 
   dimension: advice__c {
+    hidden: yes
     type: string
     sql: ${TABLE}.Advice__c ;;
   }
 
   dimension: all_matched__c {
+    hidden: yes
     type: yesno
     sql: ${TABLE}.AllMatched__c ;;
   }
 
   dimension: assignment_e_mail_sent__c {
+    hidden: yes
     type: yesno
     sql: ${TABLE}.Assignment_E_Mail_sent__c ;;
   }
 
   dimension: bill_to_contact_id {
+    hidden: yes
     type: string
     sql: ${TABLE}.BillToContactId ;;
   }
 
   dimension: billing_address_name__c {
+    hidden: yes
     type: string
     sql: ${TABLE}.Billing_Address_Name__c ;;
   }
 
   dimension: billing_address_phone__c {
+    hidden: yes
     type: string
     sql: ${TABLE}.Billing_Address_Phone__c ;;
   }
 
   dimension: billing_city {
+    hidden: yes
     type: string
     sql: ${TABLE}.BillingCity ;;
   }
@@ -133,17 +151,6 @@ view: order {
     sql: ${TABLE}.BillingCompanyName__c ;;
   }
 
-  #B2B/B2C
-  dimension: sales_channel {
-    type: string
-    sql: CASE WHEN ${is_paid_order} = "1" AND ${billing_address_name__c} IS NUll OR ${billing_company_name__c} IN (lower("%santander consumer leasing gmbh%"), "Herr", "herr", "Frau", "frau", "c/o")
-      THEN "B2C"
-              WHEN ${is_paid_order} = "1" AND ${billing_address_name__c} IS NOT NUll OR ${billing_company_name__c} NOT IN (lower("%santander consumer leasing gmbh%"), "Herr", "herr", "Frau", "frau", "c/o")
-      THEN "B2B"
-      ELSE NULL
-      END
-        ;;
-  }
 
   dimension: billing_country {
     type: string
@@ -151,56 +158,67 @@ view: order {
   }
 
   dimension: billing_country_code {
+    hidden: yes
     type: string
     sql: ${TABLE}.BillingCountryCode ;;
   }
 
   dimension: billing_geocode_accuracy {
+    hidden: yes
     type: string
     sql: ${TABLE}.BillingGeocodeAccuracy ;;
   }
 
   dimension: billing_latitude {
+    hidden: yes
     type: number
     sql: ${TABLE}.BillingLatitude ;;
   }
 
   dimension: billing_longitude {
+    hidden: yes
     type: number
     sql: ${TABLE}.BillingLongitude ;;
   }
 
   dimension: billing_postal_code {
+    hidden: yes
     type: string
     sql: ${TABLE}.BillingPostalCode ;;
   }
 
   dimension: billing_state {
+    hidden: yes
     type: string
     sql: ${TABLE}.BillingState ;;
   }
 
   dimension: billing_state_code {
+    hidden: yes
     type: string
     sql: ${TABLE}.BillingStateCode ;;
   }
 
   dimension: billing_street {
+    hidden: yes
     type: string
     sql: ${TABLE}.BillingStreet ;;
   }
 
   dimension: commission_amount__c {
+    hidden: yes
     type: number
     sql: ${TABLE}.Commission_amount__c ;;
   }
 
   dimension: company_authorized_by_id {
+    hidden: yes
     type: string
     sql: ${TABLE}.CompanyAuthorizedById ;;
   }
 
   dimension_group: company_authorized {
+    hidden: yes
     type: time
     timeframes: [
       raw,
@@ -216,26 +234,31 @@ view: order {
   }
 
   dimension: confirmation_email_sent__c {
+    hidden: yes
     type: yesno
     sql: ${TABLE}.ConfirmationEmailSent__c ;;
   }
 
   dimension: contract_id {
+    hidden: yes
     type: string
     sql: ${TABLE}.ContractId ;;
   }
 
   dimension: country__c {
+    hidden: yes
     type: string
     sql: ${TABLE}.Country__c ;;
   }
 
   dimension: coupon_code__c {
+    hidden: yes
     type: string
     sql: ${TABLE}.CouponCode__c ;;
   }
 
   dimension: created_by_id {
+    hidden: yes
     type: string
     sql: ${TABLE}.CreatedById ;;
   }
@@ -255,16 +278,19 @@ view: order {
   }
 
   dimension: currency_iso_code {
+    hidden: yes
     type: string
     sql: ${TABLE}.CurrencyIsoCode ;;
   }
 
   dimension: customer_authorized_by_id {
+    hidden: yes
     type: string
     sql: ${TABLE}.CustomerAuthorizedById ;;
   }
 
   dimension_group: customer_authorized {
+    hidden: yes
     type: time
     timeframes: [
       raw,
@@ -280,11 +306,13 @@ view: order {
   }
 
   dimension: customer_vatnumber__c {
+    hidden: yes
     type: string
     sql: ${TABLE}.CustomerVATNumber__c ;;
   }
 
   dimension_group: customization_finished_date__c {
+    hidden: yes
     type: time
     timeframes: [
       raw,
@@ -300,26 +328,31 @@ view: order {
   }
 
   dimension: delay_category__c {
+    hidden: yes
     type: string
     sql: ${TABLE}.Delay_Category__c ;;
   }
 
   dimension: delay_days__c {
+    hidden: yes
     type: number
     sql: ${TABLE}.Delay_Days__c ;;
   }
 
   dimension: delivered_legacy__c {
+    hidden: yes
     type: yesno
     sql: ${TABLE}.DeliveredLegacy__c ;;
   }
 
   dimension: delivery_customisation_finished_del__c {
+    hidden: yes
     type: yesno
     sql: ${TABLE}.Delivery_Customisation_finished_del__c ;;
   }
 
   dimension_group: delivery_date__c {
+    hidden: yes
     type: time
     timeframes: [
       raw,
@@ -335,56 +368,61 @@ view: order {
   }
 
   dimension: delivery_delay__c {
+    hidden: yes
     type: string
     sql: ${TABLE}.Delivery_Delay__c ;;
   }
 
   dimension: delivery_order__c {
+    hidden: yes
     type: string
     sql: ${TABLE}.Delivery_Order__c ;;
   }
 
   dimension: delivery_order_checked__c {
+    hidden: yes
     type: yesno
     sql: ${TABLE}.Delivery_Order_checked__c ;;
   }
 
   dimension: delivery_order_created__c {
+    hidden: yes
     type: yesno
     sql: ${TABLE}.DeliveryOrderCreated__c ;;
   }
 
   dimension: delivery_order_shipped__c {
+    hidden: yes
     type: yesno
     sql: ${TABLE}.DeliveryOrderShipped__c ;;
   }
 
-#   dimension: delivery_order_shipped__c {
-#     type: yesno
-#     sql: ${TABLE}.Delivery_Order_shipped__c ;;
-#   }
-
-  dimension: description {
+   dimension: description {
+    hidden: yes
     type: string
     sql: ${TABLE}.Description ;;
   }
 
   dimension: description__c {
+    hidden: yes
     type: string
     sql: ${TABLE}.Description__c ;;
   }
 
   dimension: discount_amount__c {
+    hidden: yes
     type: number
     sql: ${TABLE}.DiscountAmount__c ;;
   }
 
   dimension: discount_amount_ex_tax__c {
+    hidden: yes
     type: number
     sql: ${TABLE}.DiscountAmountExTax__c ;;
   }
 
   dimension_group: doscheduleddeliverydate__c {
+    hidden: yes
     type: time
     timeframes: [
       raw,
@@ -1061,12 +1099,17 @@ view: order {
     sql: ${TABLE}.UniqueOrderReference__c ;;
   }
 
+    measure: number_of_paid_orders {
+    type: count
+    filters: {field: is_paid_order value: "1"}
+    drill_fields: [order_number, magento_grand_total__c,account_name__c,sales_channel,Sales_Stream,order_line__C.skufor_rollup__c, billing_company_name__c]
+  }
+
+  #Paid Orders
   measure: number_of_sales {
     type: count
     drill_fields: [magento_order_id__c, name]
   }
-
-  #Paid Orders
   dimension: is_paid_order {
     description: "This is a Paid Order"
     sql: CASE WHEN ${magento_grand_total__c} >=1000 AND ${status}="Paid" AND ${order_line__c.product_type} = "Scooter"
@@ -1075,9 +1118,29 @@ view: order {
               END ;;
   }
 
-  measure: number_of_paid_orders {
-    type: count
-    filters: {field: is_paid_order value: "1"}
+  #B2B/B2C
+  dimension: sales_channel {
+    type: string
+    sql: CASE WHEN ${billing_company_name__c} IS NUll OR ${billing_company_name__c} IN ('Santander Consumer', 'Frau', 'Herr')
+              THEN "B2C"
+              ELSE  "B2B"
+      END
+        ;;
+  }
+
+
+  #SalesStream
+  dimension: Sales_Stream {
+    type: string
+    sql:CASE WHEN ${is_paid_order} = '1' AND ${opportunity.id} IS NOT NULL AND ${profile.name} = 'Pioneer community user'
+            THEN "Pioneer"
+            WHEN  ${is_paid_order} = '1' AND ${opportunity.id} IS NOT NULL AND ${profile.name} != 'Pioneer community user'
+            THEN "Inside Sale"
+            WHEN ${is_paid_order} = '1' AND ${opportunity.id} IS NULL
+          THEN "Direct Sale"
+          ELSE NULL
+          END
+        ;;
   }
 
   #Sals Channels
