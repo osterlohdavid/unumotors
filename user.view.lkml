@@ -2,7 +2,6 @@ view: user {
   sql_table_name: Salesforce.User ;;
 
   dimension: pi__pardot_user_id__c {
-    primary_key: yes
     type: string
     sql: ${TABLE}.pi__Pardot_User_Id__c ;;
   }
@@ -242,6 +241,7 @@ view: user {
   }
 
   dimension: id {
+    primary_key: yes
     type: string
     sql: ${TABLE}.Id ;;
   }

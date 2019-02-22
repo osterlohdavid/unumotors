@@ -657,6 +657,7 @@ view: order {
     filters: { field: status  value: "Paid"
     }
     filters: { field: is_over_1000 value: "Yes" }
+#      filters: {field:is_paid_order value:"Yes"}
     drill_fields: [number_of_sales]
   }
 
@@ -1102,7 +1103,7 @@ view: order {
     measure: number_of_paid_orders {
     type: count
     filters: {field: is_paid_order value: "1"}
-    drill_fields: [order_number, magento_grand_total__c,account_name__c,sales_channel,Sales_Stream,order_line__C.skufor_rollup__c, billing_company_name__c]
+    drill_fields: [order_number, magento_grand_total__c,account_name__c,sales_channel,sales_stream,order_line__C.skufor_rollup__c, billing_company_name__c]
   }
 
   #Paid Orders
@@ -1129,25 +1130,41 @@ view: order {
   }
 
 
-  #SalesStream
-  dimension: Sales_Stream {
+#   SalesStream
+#   SIMPLE
+#   dimension: sales_stream {
+#     type: string
+#     sql:CASE WHEN ${is_paid_order} = '1' AND ${opportunity.id} IS NOT NULL AND ${profile.name} = 'Pioneer community user'
+#             THEN "Pioneer"
+#             WHEN  ${is_paid_order} = '1' AND ${opportunity.id} IS NOT NULL AND ${profile.name} != 'Pioneer community user'
+#             THEN "Inside Sale"
+#             WHEN ${is_paid_order} = '1' AND ${opportunity.id} IS NULL
+#           THEN "Direct Sale"
+#           ELSE NULL
+#           END
+#         ;;
+#   }
+
+  #Desired
+  dimension: sales_stream {
     type: string
-    sql:CASE WHEN ${is_paid_order} = '1' AND ${opportunity.id} IS NOT NULL AND ${profile.name} = 'Pioneer community user'
-            THEN "Pioneer"
-            WHEN  ${is_paid_order} = '1' AND ${opportunity.id} IS NOT NULL AND ${profile.name} != 'Pioneer community user'
-            THEN "Inside Sale"
-            WHEN ${is_paid_order} = '1' AND ${opportunity.id} IS NULL
-          THEN "Direct Sale"
-          ELSE NULL
+    sql:CASE WHEN ${paid_date__c_date} > ${order_facts.latest_event_date} AND ${created_date} < ${order_facts.latest_task_date}
+            OR ${paid_date__c_date} > ${order_facts.latest_event_date} AND ${created_date} < ${order_facts.latest_task_date}
+            THEN 'Pioneer'
+            WHEN ${created_date} > ${order_facts.latest_task_date} AND ${paid_date__c_date} < ${order_facts.latest_event_date}
+            OR ${created_date} > ${order_facts.latest_task_date} AND ${order_facts.latest_event_date} IS NULL
+            THEN 'Inside Sale'
+            WHEN ${paid_date__c_date} < ${order_facts.latest_event_date} AND ${created_date} < ${order_facts.latest_task_date}
+            THEN 'Direct Sale'
+            ELSE NULL
           END
         ;;
   }
 
-  #Sals Channels
-  # measure:  b2b {
-  #   label: "B2B"
 
- # }
+
+  #Sales Channels
+
 
 
   # measure: number_of_paid_orders {

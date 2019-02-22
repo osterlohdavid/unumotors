@@ -2,7 +2,7 @@ view: order_line__c {
   sql_table_name: Salesforce.OrderLine__c ;;
 
   dimension: id {
-    type: string
+   primary_key:yes  type: string
     sql: ${TABLE}.Id ;;
   }
 
@@ -86,6 +86,11 @@ view: order_line__c {
   dimension: discount_amount__c {
     type: number
     sql: ${TABLE}.DiscountAmount__c ;;
+  }
+
+  measure: total_discount_amount__c {
+    type: sum
+    sql: ${discount_amount__c} ;;
   }
 
   dimension_group: helper__c {
@@ -180,7 +185,7 @@ view: order_line__c {
   }
 
   dimension: order__c {
-    primary_key: yes
+#     primary_key: yes
     type: string
     sql: ${TABLE}.Order__c ;;
   }
@@ -230,6 +235,11 @@ view: order_line__c {
     sql: ${TABLE}.RetailPrice__c ;;
   }
 
+  measure: total_retail_price__c {
+    type: sum
+    sql: ${retail_price__c} ;;
+  }
+
   dimension: serial_number__c {
     type: string
     sql: ${TABLE}.SerialNumber__c ;;
@@ -243,6 +253,38 @@ view: order_line__c {
   dimension: skufor_rollup__c {
     type: string
     sql: ${TABLE}.SKUForRollup__c ;;
+  }
+
+  dimension: seat_colours {
+    group_label: "Product Features"
+    type: string
+    sql: CASE WHEN ${skufor_rollup__c} LIKE "%BLK%" THEN 'BLK'
+              WHEN ${skufor_rollup__c} LIKE "%CGN%" THEN 'CGN'
+              WHEN ${skufor_rollup__c} LIKE "%SND%" THEN 'SND'
+              ELSE NULL END ;;
+  }
+
+  dimension: body_colours {
+    group_label: "Product Features"
+    type: string
+    sql: CASE WHEN ${skufor_rollup__c} LIKE "%MBLUE%" THEN 'MBLUE'
+              WHEN ${skufor_rollup__c} LIKE "%RED%" THEN 'RED'
+              WHEN ${skufor_rollup__c} LIKE "%BLUE%" THEN 'BLUE'
+              WHEN ${skufor_rollup__c} LIKE "%MGREEN%" THEN 'MGREEN'
+              WHEN ${skufor_rollup__c} LIKE "%MROSE%" THEN 'MROSE'
+              WHEN ${skufor_rollup__c} LIKE "%MBLACK%" THEN 'MBLACK'
+              WHEN ${skufor_rollup__c} LIKE "%BLACK%" THEN 'BLACK'
+              WHEN ${skufor_rollup__c} LIKE "%MKHAK%" THEN 'MKHAK'
+              ELSE NULL END ;;
+  }
+
+  dimension: scooter_type {
+    group_label: "Product Features"
+    type: string
+    sql: CASE WHEN ${skufor_rollup__c} LIKE "%1000%" THEN '1 kW'
+              WHEN ${skufor_rollup__c} LIKE "%2000%" THEN '2 kW'
+              WHEN ${skufor_rollup__c} LIKE "%3000%" THEN '3 kW'
+              ELSE NULL END;;
   }
 
   dimension: product_type {
@@ -322,9 +364,19 @@ view: order_line__c {
     sql: ${TABLE}.TotalPrice__c ;;
   }
 
+  measure: sum_of_total_price__c {
+    type: sum
+    sql: ${total_price__c} ;;
+  }
+
   dimension: total_price_ex_tax__c {
     type: number
     sql: ${TABLE}.TotalPriceExTax__c ;;
+  }
+
+  measure: sum_of_total_price_ex_tax__c {
+    type: sum
+    sql: ${total_price_ex_tax__c} ;;
   }
 
   dimension: unique_stock_item_id__c {
@@ -337,9 +389,19 @@ view: order_line__c {
     sql: ${TABLE}.UnitPrice__c ;;
   }
 
+  measure: sum_of_unit_price__c {
+    type: sum
+    sql: ${unit_price__c} ;;
+  }
+
   dimension: unit_price_ex_tax__c {
     type: number
     sql: ${TABLE}.UnitPriceExTax__c ;;
+  }
+
+  measure: sum_of_unit_price_ex_tax__c {
+    type: sum
+    sql: ${total_price_ex_tax__c} ;;
   }
 
   measure: count {

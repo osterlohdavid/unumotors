@@ -21,32 +21,51 @@ include: "*.view.lkml"                       # include all views in this project
 explore: order {
   label: "Sales"
   join: order_line__c {
-    relationship: one_to_one
-    type: inner
+    relationship: one_to_many
+    type: left_outer
     sql_on: ${order.id} = ${order_line__c.order__c} ;;
   }
+
+  join: order_facts {
+    relationship: one_to_many
+    type: left_outer
+    sql_on: ${order.id} = ${order_facts.order_id} ;;
+  }
+
   join: account {
-    relationship: one_to_one
-    type: inner
+    relationship: many_to_one
+    type: left_outer
     sql_on: ${order.account_id} = ${account.id} ;;
   }
 
   join: opportunity {
-    relationship: many_to_one
+    relationship: one_to_many
     type: left_outer
     sql_on: ${order.opportunity_id} = ${opportunity.id} ;;
   }
 
   join: user {
-    relationship:many_to_one
+    relationship: one_to_many
     type: left_outer
     sql_on:${opportunity.owner_id} = ${user.id} ;;
   }
 
   join: profile {
-    relationship: many_to_one
+    relationship: one_to_many
     type: left_outer
-    sql_on:  ${profile.id} = ${user.profile_id}   ;;
+    sql_on:  ${user.profile_id} = ${profile.id}   ;;
+  }
+
+  join: task {
+    relationship: one_to_many
+    type: full_outer
+    sql_on: ${opportunity.id} = ${task.what_id} ;;
+  }
+
+  join: event {
+    relationship: one_to_many
+    type: full_outer
+    sql_on: ${account.id} = ${event.account_id} ;;
   }
 
 }
